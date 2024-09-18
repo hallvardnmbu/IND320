@@ -6,13 +6,11 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "css")));
 
-// Serve static files from the public directory
-app.use(express.static(path.join(__dirname, "public")));
+const dataFile = path.join(__dirname, "data/data.json");
 
-const dataFile = path.join(__dirname, "data.json");
-
-// Ensure the data file exists
+// Ensure the data file exists.
 (async () => {
   try {
     await fs.access(dataFile);
@@ -21,6 +19,12 @@ const dataFile = path.join(__dirname, "data.json");
   }
 })();
 
+// Add `index.html` to the root of the project.
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
+// API endpoint to get data.
 app.get("/api/data", async (req, res) => {
   try {
     const data = await fs.readFile(dataFile, "utf8");

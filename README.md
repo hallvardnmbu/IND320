@@ -1,16 +1,10 @@
 # Add data
 
-Modify the `api/data.json` file to include your own data. The data should be an array of objects, where each object represents a single item. Each object should have the following properties:
+Modify the `data/data.json` file to include your own data. The data should be an array of objects, where each object represents a single item. Each object should contain at least the following properties:
 
 * `date` (this is the current value for filtering through the endpoint)
 
-# Start the server
-
-Navigate to `api/`:
-
-```bash
-cd api/
-```
+# Run locally
 
 Install dependencies:
 
@@ -24,7 +18,7 @@ Start the server:
 npm start
 ```
 
-# Host the server
+# Run on a remote machine
 
 Run the `setup.sh` script to host the server on a remote machine. The script will install the necessary dependencies and start the server.
 
@@ -39,7 +33,7 @@ server {
         listen 80 default_server;
         listen [::]:80 default_server;
 
-        root /var/www/ind320/public/;
+        root /var/www/api/;
 
         # Add index.php to the list if you are using PHP
         index index.html index.htm index.nginx-debian.html;
