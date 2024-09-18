@@ -6,7 +6,7 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "css")));
+app.use("/css", express.static(path.join(__dirname, "css")));
 
 const dataFile = path.join(__dirname, "data/data.json");
 
