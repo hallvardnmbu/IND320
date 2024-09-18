@@ -32,31 +32,26 @@ app.get("/api/data", async (req, res) => {
       return res.status(400).json({ error: "Both startDate and endDate are required" });
     }
 
-    // Define the regex pattern for YYYY-MM-DD
+    // Assert that the dates are in the correct format
     const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-
-    // Validate the date format
     if (!datePattern.test(startDate) || !datePattern.test(endDate)) {
       return res.status(400).json({ error: "Invalid date format. Use YYYY-MM-DD" });
     }
 
-    // Define the regex pattern for YYYY-MM-DD
+    // Assert that the dates are of valid values
     const valuePattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
-
-    // Validate the date format
     if (!valuePattern.test(startDate) || !valuePattern.test(endDate)) {
       return res.status(400).json({ error: "Invalid date. Check their values" });
     }
 
+    // Convert the dates to Date objects and assert that they are valid
     const start = new Date(startDate);
     const end = new Date(endDate);
-
-    // Check if the dates are valid
     if (isNaN(start) || isNaN(end)) {
       return res.status(400).json({ error: "Invalid date format. Use YYYY-MM-DD" });
     }
 
-    // Check if start date is greater than end date
+    // Assert that the start date is not greater than the end date
     if (start > end) {
       return res.status(400).json({ error: "startDate cannot be greater than endDate" });
     }
