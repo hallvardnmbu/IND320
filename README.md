@@ -1,33 +1,25 @@
-# Add data
+# Set up your own API server
 
-Modify the `data/data.json` file to include your own data. The data should be an array of objects, where each object represents a single item. Each object should contain at least the following properties:
+The following repository is a simple API server that serves data from a JSON file (although this might easily be exchanged with a database of choice). In addition, the server hosts a static website displaying the documentation for the API.
+
+## Add your data
+
+Modify the `data/data.json` file to include your own data. The data should be an array of objects, where each object represents a single item. Each object should contain at least the following properties;
 
 * `date` (this is the current value for filtering through the endpoint)
 
-# Run locally
+for the current implementation to work. Feel free to modify `app.js` to include additional properties.
 
-Install dependencies:
+## Host the server
 
-```bash
-npm install
-```
-
-Start the server:
-
-```bash
-npm start
-```
-
-# Run on a remote machine
-
-Run the `setup.sh` script to host the server on a remote machine. The script will install the necessary dependencies and start the server.
+Run the `setup.sh` script to host the server on a (remote) machine. The script will install the necessary dependencies and start the server.
 
 ```bash
 chmod +x setup.sh
 ./setup.sh
 ```
 
-Prior to this, it is necessary to correctly set up the `nginx` configuration file. The configuration file should be located at `/etc/nginx/sites-available/default` and should look like this:
+Prior to this, it is necessary to correctly set up the `nginx` configuration file. The configuration file should be located at `/etc/nginx/sites-available/default`. Modify the file to include the following configuration:
 
 ```nginx
 server {
@@ -35,14 +27,11 @@ server {
         listen [::]:80 default_server;
 
         root /var/www/api/;
-
-        index index.html index.htm index.nginx-debian.html;
+        index index.html;
 
         server_name _;
 
         location / {
-                # First attempt to serve request as file, then
-                # as directory, then fall back to displaying a 404.
                 try_files $uri $uri/ =404;
         }
 
@@ -65,9 +54,9 @@ sudo systemctl restart nginx
 
 Here, it is important to note the `root /var/www/api/;` line. This should be the path to the the root directory of the project. As there is insufficient permissions, it is unable to point directly to the `/root/api/` directory. Instead, the directory is copied to `/var/www/api/` and the `root` path is set to `/var/www/api/`.
 
-## Guide to set up automatic file copying from `/root/api/` to `/var/www/api/` on changes.
+### Guide to set up automatic file copying from `/root/api/` to `/var/www/api/` on changes.
 
-### 1.
+#### 1. Monitoring script
 
 Create the monitoring script:
 
@@ -87,7 +76,7 @@ done
 
 `sudo chmod +x /usr/local/bin/monitor-api.sh`
 
-### 2.
+#### 2. Systemd service
 
 Create the systemd service:
 
