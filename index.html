@@ -34,13 +34,85 @@
                 <a href="https://www.nmbu.no/en/course/IND320" target="_blank">IND320</a>
                 course at
                 <a href="https://www.nmbu.no" target="_blank">NMBU</a>.<br />
-                This site provides the API's used for the project work.<br />
+                This site provides an example of a hosted API, that is fully customizable.<br />
                 Documentation for the various endpoints can be found below.
             </section>
             <section>
                 <header>Endpoints</header>
-                /api/data?startDate={YYYY-MM-DD}&endDate={YYYY-MM-DD}<br />
+                <strong>/api/data?startDate={YYYY-MM-DD}&endDate={YYYY-MM-DD}</strong>
+                <p>
+                    This endpoint retrieves data within a specified date range. The dates should be
+                    provided in the format YYYY-MM-DD.
+                </p>
+                <strong>Parameters</strong>
+                <ul>
+                    <li>
+                        <strong>startDate</strong> (required): The start date of the range. Format:
+                        YYYY-MM-DD.
+                    </li>
+                    <li>
+                        <strong>endDate</strong> (required): The end date of the range. Format:
+                        YYYY-MM-DD.
+                    </li>
+                </ul>
+                <strong>Example request</strong>
+                <p>
+                    <code>{url}/api/data?startDate=2023-01-01&endDate=2023-01-31</code>
+                </p>
+                <strong>Example response</strong>
+                <pre><code>
+[
+    {
+        "id": 1,
+        "date": "2023-01-01",
+        "value": "Sample Data 1"
+    },
+    {
+        "id": 2,
+        "date": "2023-01-02",
+        "value": "Sample Data 2"
+    },
+    // More data ...
+]
+                </code></pre>
+                <strong>Response codes</strong>
+                <ul>
+                    <li>
+                        <strong>200 OK</strong>: The request was successful, and the data is
+                        returned in the response. This status code indicates that the server has
+                        successfully processed the request and is returning the requested data.
+                    </li>
+                    <li>
+                        <strong>400 Bad Request</strong>: The request was invalid. This can happen
+                        if the date format is incorrect, if required parameters (startDate and
+                        endDate) are missing, if the dates are not in the correct format
+                        (YYYY-MM-DD), if the dates have invalid values, or if the startDate is
+                        greater than the endDate. The response will include an error message
+                        explaining the specific issue.
+                    </li>
+                    <li>
+                        <strong>500 Internal Server Error</strong>: An error occurred on the server.
+                        This status code indicates that the server encountered an unexpected
+                        condition that prevented it from fulfilling the request. The response will
+                        include an error message indicating that the server failed to read the data,
+                        possibly due to incorrect dates or other internal issues.
+                    </li>
+                </ul>
             </section>
         </main>
+        <footer>
+            <span>
+                <a href="https://github.com/hallvardnmbu/api/tree/master" target="_blank"
+                    >Repository</a
+                >
+                made by <a href="https://dilettant.no" target="_blank">Hallvard</a>.</span
+            >
+            <span>
+                Hosted through a
+                <a href="https://www.digitalocean.com" target="_blank">DigitalOcean</a>
+                <a href="https://www.digitalocean.com/products/droplets" target="_blank">Droplet</a
+                >.
+            </span>
+        </footer>
     </body>
 </html>

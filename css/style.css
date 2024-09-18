@@ -32,7 +32,8 @@ body {
     display: grid;
     grid-template-rows: auto 1fr;
     padding: 20px;
-    line-height: 1.2rem;
+    line-height: 1.4rem;
+    min-height: 90vh;
 }
 
 header {
@@ -52,6 +53,11 @@ header {
     .email {
         margin-left: 0;
     }
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
 }
 
 a {
@@ -83,4 +89,14 @@ section header {
     font-weight: 700;
     padding: 5px 10px;
     margin: -10px -10px 10px -10px;
+}
+
+code {
+    background-color: #f4f4f4;
+    /* border: var(--border) solid black; */
+    padding: 1px 35px;
+    display: block;
+    margin-left: -11px;
+    width: calc(100% + 22px);
+    box-sizing: border-box;
 }
