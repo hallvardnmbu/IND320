@@ -1,0 +1,4 @@
+.DS_Store
+
+api/package-lock.json
+api/node_modules/
