@@ -23,6 +23,7 @@ npm start
 Run the `setup.sh` script to host the server on a remote machine. The script will install the necessary dependencies and start the server.
 
 ```bash
+chmod +x setup.sh
 ./setup.sh
 ```
 

@@ -7,6 +7,9 @@ sudo apt update && sudo apt upgrade -y
 curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
+# Install express
+sudo npm install express
+
 # Install PM2 globally
 sudo npm install -g pm2
 
