@@ -10,7 +10,7 @@ sudo apt-get install -y nodejs
 # Install PM2 globally
 sudo npm install -g pm2
 
-cd ~/api
+cd ~/ind320/api
 
 # Start the API with PM2
 pm2 start app.js --name api

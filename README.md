@@ -23,3 +23,11 @@ Start the server:
 ```bash
 npm start
 ```
+
+# Host the server
+
+Run the `setup.sh` script to host the server on a remote machine. The script will install the necessary dependencies and start the server.
+
+```bash
+./setup.sh
+```
