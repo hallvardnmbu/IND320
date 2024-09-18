@@ -6,7 +6,6 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
-app.use("/css", express.static(path.join(__dirname, "css")));
 
 const dataFile = path.join(__dirname, "data/data.json");
 
@@ -18,11 +17,6 @@ const dataFile = path.join(__dirname, "data/data.json");
     await fs.writeFile(dataFile, "[]");
   }
 })();
-
-// Add `index.html` to the root of the project.
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
 
 // API endpoint to get data.
 app.get("/api/data", async (req, res) => {
