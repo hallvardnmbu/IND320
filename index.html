@@ -72,30 +72,21 @@
         "date": "2023-01-02",
         "value": "Sample Data 2"
     },
-    // More data ...
+    // ...
 ]
                 </code></pre>
                 <strong>Response codes</strong>
                 <ul>
+                    <li><strong>200</strong> (OK): The request was successful.</li>
                     <li>
-                        <strong>200 OK</strong>: The request was successful, and the data is
-                        returned in the response. This status code indicates that the server has
-                        successfully processed the request and is returning the requested data.
+                        <strong>400</strong> (Bad request): If the date format is incorrect, if
+                        required parameters (startDate and endDate) are missing, if the dates are
+                        not in the correct format (YYYY-MM-DD), if the dates have invalid values, or
+                        if the startDate is greater than the endDate.
                     </li>
                     <li>
-                        <strong>400 Bad Request</strong>: The request was invalid. This can happen
-                        if the date format is incorrect, if required parameters (startDate and
-                        endDate) are missing, if the dates are not in the correct format
-                        (YYYY-MM-DD), if the dates have invalid values, or if the startDate is
-                        greater than the endDate. The response will include an error message
-                        explaining the specific issue.
-                    </li>
-                    <li>
-                        <strong>500 Internal Server Error</strong>: An error occurred on the server.
-                        This status code indicates that the server encountered an unexpected
-                        condition that prevented it from fulfilling the request. The response will
-                        include an error message indicating that the server failed to read the data,
-                        possibly due to incorrect dates or other internal issues.
+                        <strong>500</strong> (Internal server error): An error occurred on the
+                        server.
                     </li>
                 </ul>
             </section>
