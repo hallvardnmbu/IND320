@@ -18,8 +18,8 @@ const dataFile = path.join(__dirname, "data/data.json");
   }
 })();
 
-// API endpoint to get data.
-app.get("/api/data", async (req, res) => {
+// API endpoint to get data by dates.
+app.get("/api/dates", async (req, res) => {
   try {
     const data = await fs.readFile(dataFile, "utf8");
     let jsonData = JSON.parse(data);
@@ -62,6 +62,31 @@ app.get("/api/data", async (req, res) => {
     res.json(jsonData);
   } catch (error) {
     res.status(500).json({ error: "Failed to read data, are the dates correct?" });
+  }
+});
+
+// API endpoint to get data by id.
+app.get("/api/id", async (req, res) => {
+  try {
+    const data = await fs.readFile(dataFile, "utf8");
+    let jsonData = JSON.parse(data);
+
+    const { value } = req.query;
+
+    if (!value) {
+      return res.status(400).json({ error: "Value is required" });
+    }
+
+    // Assert that the value is an integer.
+    if (!Number.isInteger(Number(value))) {
+      return res.status(400).json({ error: "Invalid value. Use an integer" });
+    }
+
+    jsonData = jsonData.filter((item) => item.value === value);
+
+    res.json(jsonData);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to read data" });
   }
 });
 

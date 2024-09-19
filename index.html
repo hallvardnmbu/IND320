@@ -37,13 +37,10 @@
                 This site provides an example of a hosted API, that is fully customizable.<br />
                 Documentation for the various endpoints can be found below.
             </section>
+
             <section>
-                <header>Endpoints</header>
-                <strong>/api/data?startDate={YYYY-MM-DD}&endDate={YYYY-MM-DD}</strong>
-                <p>
-                    This endpoint retrieves data within a specified date range. The dates should be
-                    provided in the format YYYY-MM-DD.
-                </p>
+                <header>/api/dates</header>
+                <p>This endpoint retrieves data within a specified date range.</p>
                 <strong>Parameters</strong>
                 <ul>
                     <li>
@@ -57,7 +54,7 @@
                 </ul>
                 <strong>Example request</strong>
                 <p>
-                    <code>{url}/api/data?startDate=2023-01-01&endDate=2023-01-31</code>
+                    <code>{url}/api/dates?startDate=2023-01-01&endDate=2023-01-31</code>
                 </p>
                 <strong>Example response</strong>
                 <pre><code>
@@ -65,12 +62,10 @@
     {
         "id": 1,
         "date": "2023-01-01",
-        "value": "Sample Data 1"
     },
     {
         "id": 2,
         "date": "2023-01-02",
-        "value": "Sample Data 2"
     },
     // ...
 ]
@@ -83,6 +78,40 @@
                         required parameters (startDate and endDate) are missing, if the dates are
                         not in the correct format (YYYY-MM-DD), if the dates have invalid values, or
                         if the startDate is greater than the endDate.
+                    </li>
+                    <li>
+                        <strong>500</strong> (Internal server error): An error occurred on the
+                        server.
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <header>/api/id</header>
+                <p>This endpoint retrieves data with a specified id.</p>
+                <strong>Parameters</strong>
+                <ul>
+                    <li><strong>value</strong> (required): The id of the data to retrieve.</li>
+                </ul>
+                <strong>Example request</strong>
+                <p>
+                    <code>{url}/api/id?value=1</code>
+                </p>
+                <strong>Example response</strong>
+                <pre><code>
+[
+    {
+        "id": 1,
+        "date": "2023-01-01",
+    },
+]
+                </code></pre>
+                <strong>Response codes</strong>
+                <ul>
+                    <li><strong>200</strong> (OK): The request was successful.</li>
+                    <li>
+                        <strong>400</strong> (Bad request): If the id is missing or if the id is not
+                        an integer.
                     </li>
                     <li>
                         <strong>500</strong> (Internal server error): An error occurred on the
