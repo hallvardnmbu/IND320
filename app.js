@@ -82,9 +82,8 @@ app.get("/id", async (req, res) => {
     if (isNaN(parsedValue)) {
       return res.status(400).json({ error: "Invalid id. Use an integer" });
     }
-    value = parsedValue;
 
-    jsonData = jsonData.filter((item) => item.id === value);
+    jsonData = jsonData.filter((item) => item.id === parsedValue);
 
     res.json(jsonData);
   } catch (error) {
