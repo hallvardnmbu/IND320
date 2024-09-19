@@ -76,9 +76,10 @@ app.get("/id", async (req, res) => {
     if (!value) {
       return res.status(400).json({ error: "Value is required" });
     }
+    value = parseInt(value);
 
     // Assert that the value is an integer.
-    if (!Number.isInteger(Number(value))) {
+    if (!Number.isInteger(value)) {
       return res.status(400).json({ error: "Invalid id. Use an integer" });
     }
 
