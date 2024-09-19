@@ -22,27 +22,36 @@ chmod +x setup.sh
 Prior to this, it is necessary to correctly set up the `nginx` configuration file. The configuration file should be located at `/etc/nginx/sites-available/default`. Modify the file to include the following configuration:
 
 ```nginx
+# Main domain configuration
 server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
+    listen 80;
+    listen [::]:80;
 
-        root /var/www/api/;
-        index index.html;
+    server_name ind320.no www.ind320.no;
 
-        server_name _;
+    root /var/www/api/;
+    index index.html;
 
-        location / {
-                try_files $uri $uri/ =404;
-        }
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
 
-        location /api/ {
-                proxy_pass http://localhost:3000;
-                proxy_http_version 1.1;
-                proxy_set_header Upgrade $http_upgrade;
-                proxy_set_header Connection 'upgrade';
-                proxy_set_header Host $host;
-                proxy_cache_bypass $http_upgrade;
-        }
+# API subdomain configuration
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name api.ind320.no;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
 }
 ```
 
