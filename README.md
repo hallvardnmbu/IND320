@@ -35,54 +35,89 @@ sudo certbot --nginx -d {{ DOMAIN }} -d api.{{ DOMAIN }}
 
 ## Set up nginx configuration
 
-Note: if SSL step is skipped, the redirect to https should be removed, along with the relevant SSL-lines.
-
 The main configuration file should be located at `/etc/nginx/sites-available/default`. Modify the file to include the following configuration:
 
-```nginx
-# Main domain configuration
-server {
+<details>
+  <summary>With SSL</summary>
+  ```nginx
+  # Main domain configuration
+  server {
+      listen 80;
+      listen [::]:80;
+      server_name {{ DOMAIN }};
+      return 301 https://$host$request_uri;
+  }
+
+  server {
+      listen 443 ssl;
+      listen [::]:443 ssl;
+      server_name {{ DOMAIN }};
+
+      root /var/www/api/;
+      index index.html;
+
+      ssl_certificate /etc/letsencrypt/live/{{ DOMAIN }}/fullchain.pem;
+      ssl_certificate_key /etc/letsencrypt/live/{{ DOMAIN }}/privkey.pem;
+      include /etc/letsencrypt/options-ssl-nginx.conf;
+      ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+      location / {
+          try_files $uri $uri/ =404;
+      }
+  }
+
+  # API subdomain configuration
+  server {
+      listen 80;
+      listen [::]:80;
+      server_name api.{{ DOMAIN }};
+      return 301 https://$host$request_uri;
+  }
+
+  server {
+      listen 443 ssl;
+      listen [::]:443 ssl;
+      server_name api.{{ DOMAIN }};
+
+      ssl_certificate /etc/letsencrypt/live/api.{{ DOMAIN }}/fullchain.pem;
+      ssl_certificate_key /etc/letsencrypt/live/api.{{ DOMAIN }}/privkey.pem;
+      include /etc/letsencrypt/options-ssl-nginx.conf;
+      ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+      location / {
+          proxy_pass http://localhost:3000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection 'upgrade';
+          proxy_set_header Host $host;
+          proxy_cache_bypass $http_upgrade;
+      }
+  }
+  ```
+</details>
+
+<details>
+  <summary>Without SSL</summary>
+  ```nginx
+  # Main domain configuration
+  server {
     listen 80;
     listen [::]:80;
-    server_name {{ DOMAIN }};
-    return 301 https://$host$request_uri;
-}
-
-server {
-    listen 443 ssl;
-    listen [::]:443 ssl;
-    server_name {{ DOMAIN }};
+    server_name ind320.no www.ind320.no;
 
     root /var/www/api/;
     index index.html;
 
-    ssl_certificate /etc/letsencrypt/live/{{ DOMAIN }}/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/{{ DOMAIN }}/privkey.pem;
-    include /etc/letsencrypt/options-ssl-nginx.conf;
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
-
     location / {
         try_files $uri $uri/ =404;
     }
-}
+  }
 
-# API subdomain configuration
-server {
+  # API subdomain configuration
+  server {
     listen 80;
     listen [::]:80;
-    server_name api.{{ DOMAIN }};
-    return 301 https://$host$request_uri;
-}
-
-server {
-    listen 443 ssl;
-    listen [::]:443 ssl;
-    server_name api.{{ DOMAIN }};
-
-    ssl_certificate /etc/letsencrypt/live/api.{{ DOMAIN }}/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/api.{{ DOMAIN }}/privkey.pem;
-    include /etc/letsencrypt/options-ssl-nginx.conf;
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+    server_name api.ind320.no;
 
     location / {
         proxy_pass http://localhost:3000;
@@ -92,8 +127,9 @@ server {
         proxy_set_header Host $host;
         proxy_cache_bypass $http_upgrade;
     }
-}
-```
+  }
+  ```
+</details>
 
 After setting up the configuration file, restart the `nginx` service:
 
