@@ -2,9 +2,9 @@
 
 The following repository is a simple API server that serves data from a JSON file (although this might easily be exchanged with a database of choice). In addition, the server hosts a static website displaying the documentation for the API.
 
-Exchange `{{ DOMAIN }}` with your domain name, e.g., `ind320.no`.
+Exchange `{{ DOMAIN }}` with your domain name, e.g., `ind320.no`, where it's present.
 
-This guide is specific for Ubuntu/Debian-based systems. For other systems, the commends might differ.
+This guide is specific for Ubuntu/Debian-based systems. For other systems, the commands might differ.
 
 ## Add your data
 
@@ -200,6 +200,8 @@ Once all the above is done, it is necessary to point the domain to the server. T
 A {{ DOMAIN }} {{ IP }}
 A api.{{ DOMAIN }} {{ IP }}
 ```
+
+The IP-adress is given by the cloud host provider. For local hosting, you can use your own IP.
 
 Example:
 
